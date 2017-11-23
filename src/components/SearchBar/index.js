@@ -10,7 +10,11 @@ class SearchBar extends React.Component {
   }
 
   handleInputChange(event) {
+    // if you want to signal to React that the state has changed so that it knows to re-render,
+    // you need to call this.setState() instead.
     this.setState( { value: event.target.value });
+    // SearchBar will emit onTextChange event (pass data to parent components)
+    this.props.onTextChange(event.target.value);
   }
 
   render() {
