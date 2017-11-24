@@ -7,6 +7,8 @@ import services from './config/services';
 import GifList from './components/GifList';
 import SearchBar from './components/SearchBar';
 
+import './styles/app.css'
+
 class App extends React.Component {
   constructor() {
     super();

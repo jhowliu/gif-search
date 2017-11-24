@@ -3,9 +3,9 @@ import React from 'react'
 const GifItem = (props) => {
   console.log(props.gif.url);
   return (
-    <li>
+    <div className="gif-item">
       <img src={props.gif.url} />
-    </li>
+    </div>
   );
 }
 
