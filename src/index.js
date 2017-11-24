@@ -12,11 +12,10 @@ class App extends React.Component {
     super();
 
     this.state = {
-      gifs: [
-        { id: 1, url: 'https://cdn.free.com.tw/blog/wp-content/uploads/2014/08/Placekitten480-g.jpg' },
-        { id: 2, url: 'https://cdn.free.com.tw/blog/wp-content/uploads/2014/08/Placekitten480-g.jpg' },
-      ]
+      gifs: []
     }
+    // If you want to use 'this' in the callback, you should add the following code.
+    this.handleTextChange = this.handleTextChange.bind(this);
   }
 
   handleTextChange(text) {
@@ -28,7 +27,15 @@ class App extends React.Component {
     request
       .get(services.giphy.api)
       .query(payload)
-      .then(res => {console.log(res)});
+      .then(res => { return res.body.data; })
+      .then(data => {
+        console.log(data);
+        return data.map(gif => {
+          return { id: gif.id, url: gif.images.downsized.url }
+        });
+      }).then(gifs => {
+        this.setState({ gifs: gifs });
+      });
   }
 
   render() {

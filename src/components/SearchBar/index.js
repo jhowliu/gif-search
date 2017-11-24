@@ -14,7 +14,7 @@ class SearchBar extends React.Component {
     // you need to call this.setState() instead.
     this.setState( { value: event.target.value });
     // SearchBar will emit onTextChange event (pass data to parent components)
-    this.props.onTextChange(event.target.value);
+    this.props.onTextChange(event.target.value.replace(/\s/g, '+'));
   }
 
   render() {
