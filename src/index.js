@@ -5,6 +5,7 @@ import request from 'superagent';
 
 import services from './config/services';
 import GifList from './components/GifList';
+import GifModal from './components/GifModal';
 import SearchBar from './components/SearchBar';
 
 import './styles/app.css'
@@ -14,10 +15,29 @@ class App extends React.Component {
     super();
 
     this.state = {
-      gifs: []
+      gifs: [],
+      selectedGif: null,
+      modalIsOpen: false
     }
+
     // If you want to use 'this' in the callback, you should add the following code.
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal(gif) {
+    this.setState({
+      selectedGif: gif,
+      modalIsOpen: true
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      selectedGif: null,
+      modalIsOpen: false
+    });
   }
 
   handleTextChange(text) {
@@ -30,12 +50,8 @@ class App extends React.Component {
       .get(services.giphy.api)
       .query(payload)
       .then(res => { return res.body.data; })
-      .then(data => {
-        console.log(data);
-        return data.map(gif => {
-          return { id: gif.id, url: gif.images.downsized.url }
-        });
-      }).then(gifs => {
+      .then(gifs => {
+        console.log(gifs);
         this.setState({ gifs: gifs });
       });
   }
@@ -43,8 +59,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <SearchBar onTextChange={this.handleTextChange} />
-        <GifList gifs={this.state.gifs} />
+        <SearchBar onTextChange={ this.handleTextChange } />
+        <GifList gifs={ this.state.gifs } onSelectGif={ this.openModal } />
+        <GifModal modalIsOpen={ this.state.modalIsOpen }
+                  selectedGif={ this.state.selectedGif }
+                  onRequestClose={ this.closeModal } />
       </div>
     );
   }

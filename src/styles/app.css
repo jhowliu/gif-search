@@ -23,6 +23,16 @@
     padding: 0;
 }
 
+.gif-modal {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    /* The top will make element center-right because it center the left edge of elements.
+       So you have to use translateX(-50%) to center it currently */
+    transform: translateX(-50%) translateY(-50%);
+}
+
 input {
     display: block;
     font-size: 22px;
